@@ -1,15 +1,17 @@
 const express = require('express')
 
 const UserCtrl = require('../controllers/user-ctrl')
-
+const auth= require('../middleware/validate_token')
+const authorize= require('../middleware/check_authorization')
 const router = express.Router()
 
-router.post('/user', UserCtrl.createUser)
-router.put('/user/:id',UserCtrl.updateUser)
-router.delete('/user/:id',UserCtrl.deleteUser)
-router.get('/user/:id',UserCtrl.getUserById )
-router.get('/users',UserCtrl.getUsers)
-router.post('/login', UserCtrl.loginUser)
-router.post('/register', UserCtrl.registerUser)
+
+router.post('/user',auth,authorize,UserCtrl.createUser)
+router.put('/user/:id',auth,authorize,UserCtrl.updateUser)
+router.delete('/user/:id',auth,authorize,UserCtrl.deleteUser)
+router.get('/user/:id',auth,authorize,UserCtrl.getUserById )
+router.get('/users',auth,authorize,UserCtrl.getUsers)
+
+
 
 module.exports = router
